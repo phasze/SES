@@ -1,0 +1,241 @@
+.scFavorites{
+	color:#ffffff;
+	border-bottom: 1px solid #ffffff;
+	background-color:black;
+}
+
+.scFavorites tr:hover{
+	background-color:darkslategrey;
+}
+
+.scFavorites p{
+	font-size:18px;
+	
+	font-weight:bold;
+	font-style:italic;
+	
+	margin-left:20px;
+}
+
+.scFavorites .rightStar{
+   content: "\2605";
+   position: static;
+   cursor: pointer;
+   color: yellow;
+}
+
+.replicatedStyle{
+    padding: 20px;
+}
+
+.rightStarMov{
+    font-size: medium;
+    color: gray;
+}
+.rightStarMov:hover:before {
+   content: "\2605";
+   position: absolute;
+   cursor: pointer;
+}
+#savedMovies .rightStarMov{
+   content: "\2605";
+   position: static;
+   cursor: pointer;
+   color: yellow;
+}
+.movFav{
+	font-size:small;
+}
+
+.rightStar{
+    font-size: xx-large;
+    color: gray;
+}
+.rightStar:hover:before {
+   content: "\2605";
+   position: absolute;
+   cursor: pointer;
+}
+
+.extHeader{
+	width:100%;
+	background-color:cadetblue;
+	text-align: center;
+    font-size: large;
+}
+
+.myButton {
+	box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
+	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
+	background-color:#768d87;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border:1px solid #566963;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:5px 10px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #2b665e;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
+	background-color:#6c7c7c;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+.sucUpload{
+	background-color:chartreuse;
+	width:100%;
+	font-size:large;
+}
+
+
+/*.rightStar{
+   margin: 25px 0;
+   position: relative;
+   display: block;
+   color: red;
+   width: 0px;
+   height: 0px;
+   border-right:  25px solid transparent;
+   border-bottom: 18px  solid red;
+   border-left:   25px solid transparent;
+   -moz-transform:    rotate(35deg);
+   -webkit-transform: rotate(35deg);
+   -ms-transform:     rotate(35deg);
+   -o-transform:      rotate(35deg);
+}
+.rightStar:before {
+   border-bottom: 20px solid red;
+   border-left: 7px solid transparent;
+   border-right: 7px solid transparent;
+   position: absolute;
+   height: 0;
+   width: 0;
+   top: -11px;
+   left: -17px;
+   display: block;
+   content: '';
+   -webkit-transform: rotate(-35deg);
+   -moz-transform:    rotate(-35deg);
+   -ms-transform:     rotate(-35deg);
+   -o-transform:      rotate(-35deg);
+
+}
+.rightStar:after {
+   position: absolute;
+   display: block;
+   color: red;
+   top: 3px;
+   left: -27px;
+   width: 0px;
+   height: 0px;
+   border-right: 25px solid transparent;
+   border-bottom: 17px solid red;
+   border-left: 25px solid transparent;
+   -webkit-transform: rotate(-70deg);
+   -moz-transform:    rotate(-70deg);
+   -ms-transform:     rotate(-70deg);
+   -o-transform:      rotate(-70deg);
+   content: '';
+}*/
+
+/***ON OFF SWITCH**/
+.onoffswitch {
+    position: relative; width: 70px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 20px;
+}
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 25px; padding: 0; line-height: 25px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "ON";
+    padding-left: 10px;
+    background-color: #34A7C1; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+    content: "OFF";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block; width: 18px; margin: 3.5px;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 41px;
+    border: 2px solid #999999; border-radius: 20px;
+    transition: all 0.3s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px; 
+}
+/***END ON OFF SWITCH**/
+
+/***Notification***/
+/* The alert message box */
+.alert {
+    padding: 10px;
+    /*margin-bottom: 15px;*/
+    margin-top: 20px;
+	left:45%;
+    border-radius: 10px;
+	
+    width: 200px;
+    position: fixed;
+    z-index: 2000;
+    text-align: center;
+    background-color: #DFF0D8;
+    color: #468847;
+    font-weight: bold;
+}
+/***END Notification***/
+.movTable {
+	width:100%
+}
+.movTable span{
+	margin-left:5px;
+}
+.movTable tr td {
+    color: gray;
+    border: 1px solid gray;
+}
+.plot span.realPlot{
+	display:none;
+}
+.plot:hover span.realPlot{
+	display: block;
+}
+.plot:hover span.hoverThing{
+	display: none;
+}

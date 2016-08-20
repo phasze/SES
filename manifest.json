@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+
+  "name": "Superchillin Enhancement Suite",
+  "description": "This extension helps keep track of Favorites and make life easier",
+  "version": "2.0.3",
+
+  "browser_action":{
+	"default_popup": "popup.html",
+	"default_title": "Settings and Backup"
+  },
+  "permissions": [
+    "activeTab",
+    "https://ajax.googleapis.com/",
+	"storage",
+	"downloads"
+  ],
+  "content_scripts": [
+  {
+    "matches": [
+      "http://superchillin.com/*", "http://superchillin.net/*", "https://superchillin.net/*", "https://superchillin.com/*"
+    ],
+    "js": ["jquery-2.2.0.min.js", "content.js" ],
+	"css": ["superStyle.css"]
+  }
+]
+}

@@ -1,0 +1,70 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Superchillin Enhancement Suite!</title>
+  <meta name="description" content="Superchillin enhancement suite!">
+  <meta name="author" content="Phase">
+
+  <link rel="stylesheet" href="superStyle.css">
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <script src="./jquery-2.2.0.min.js"></script>
+  <script src="./popup.js"></script>
+  <div style="width:200px">
+	<div class="extHeader">Backup</div>
+	<br/>
+	<div style="text-align:center"><input id='downloader' type='button' class="myButton" value="Download"/></div>
+	<!--<a href="#">Download Backup Settings</a>-->
+	<br/>
+	<div class="extHeader">Restore </div> 
+	<br/> 
+	<div id='SUploadButton' style="text-align:center">
+		<label for='restore-file' class="myButton">Upload</label>
+	</div>
+	<input id="restore-file" style="display:none" type="file" />
+	<br/> 
+	<div class="extHeader">Settings </div>
+	<br/> 
+	<table>
+		<tr>
+			<td style="width:80%;font-size:15px"><span>Always Load HD</span></td>
+			<td><div class="onoffswitch">
+				<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="AlwaysLoadHD" checked>
+				<label class="onoffswitch-label" for="AlwaysLoadHD">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label>
+			</div></td>
+		</tr>
+		<tr>
+			<td style="width:80%;font-size:15px"><span>Show Metadata</span></td>
+			<td><div class="onoffswitch">
+				<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="showMetadata" checked>
+				<label class="onoffswitch-label" for="showMetadata">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label>
+			</div></td>
+		</tr>
+	</table>
+	<br/>
+	<br/>
+	<form target="_blank" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+		<input type="hidden" name="cmd" value="_s-xclick">
+		<input type="hidden" name="hosted_button_id" value="FEC3VV3A7ETMG">
+		<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+		<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+	</form>
+
+
+  </div>
+</body>
+</html>
