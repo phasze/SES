@@ -61,7 +61,7 @@ var favoriter = function favoriteMe(){
 	console.log(this);
 	var parent = $(this).parent().parent();
 	var idToStore = parent.find('a[href*="episodes"]').attr('href').substring(14);
-	
+
 	//TODO: remove favorite if clicking in favorites
 	if($(this).parents('.scFavorites').length!=0){
 		var index = StoredFavShows.indexOf(idToStore);
@@ -76,40 +76,40 @@ var favoriter = function favoriteMe(){
 	else{
 		$($(this).parents('table')[0]).next('hr').remove();
 		var addedToFavorited = $($(this).parents('table')[0]).detach(); //remove from original list
-		
+
 		// store in extension storage
-		
+
 		if(StoredFavShows.length==1 || $.inArray(idToStore,StoredFavShows)==-1)
 		{
 			StoredFavShows.push(idToStore);
 		}
 		else console.log('already saved '+idToStore);
-		
+
 		//StoredSCInfo['storedShows']
 		saveFavShows();
-		
+
 		$('.scFavorites td:first').append(addedToFavorited);
 		//addedToFavorited.after('<hr>');
 		//$(this).parent('table')
 	}
-	
-	
+
+
 }
 
 //If we're on the series page let's show their tracked shows
 if(location.href.indexOf("series.php")!=-1){
 	//using this stupid selector because of the horrible way this page is written...
 	$('tr:nth-child(2) > td:nth-child(3) > table > tbody > tr:nth-child(1)').after('<tr class="scFavorites"><td class="replicatedStyle"><p>Favorites</p><hr><br/></td></tr>');
-	
+
 	updateShows();
-	
+
 }
 
 
 var movFavoriter = function(){
 	var movieID = $(this).prev().attr('href').substring(2);
-	
-	
+
+
 	if($(this).parents('#savedMovies').length!=0){
 		//if already in favorites then remove it
 		var index = StoredFavMovies.indexOf(movieID);
@@ -117,7 +117,7 @@ var movFavoriter = function(){
 			StoredFavMovies.splice(index, 1);
 		}
 		saveFavMovies();
-		
+
 		//update favorites
 		$(this).parent().remove();
 	}
@@ -125,74 +125,77 @@ var movFavoriter = function(){
 		StoredFavMovies.push(movieID);
 		saveFavMovies();
 		addToMovieFavorites(this, movieID);
-		
-		
+
+
 	}
-	
+
 	console.log(movieID);
 }
 
 // Adds the favorited movies to the saved for later section
 function addToMovieFavorites(originator, lehMovId){
 	var toBeAddedToFavorites = $('<span class="movFav"></span>');
-	
+
 	//clone the link and star
-	toBeAddedToFavorites.append($(originator).prev().clone());
+	var cloned = $(originator).prev().clone();
+	cloned.addClass('tippable_enhanced');
+	toBeAddedToFavorites.append(cloned);
 	toBeAddedToFavorites.append(' - ');
 	toBeAddedToFavorites.append($(originator).detach());
-	
+
 	$('#savedMovies').append(toBeAddedToFavorites);
 	toBeAddedToFavorites.append('<br/>');
 }
 
 //Movies page
 if( location.href.indexOf("latest.php")!=-1){
-	
+
 	$('body > table:nth-child(4) > tbody > tr:nth-child(2) > td:nth-child(3) > table > tbody > tr:nth-child(2) > td > span')
 		.before('<div id="savedMovies"> <h2 style="text-decoration:underline" >Saved for later</h2></div><br/>');
-	
+
 	updateMovies();
 }
 if( location.href.indexOf("year.php")!=-1 ||
 	location.href.indexOf("rating.php")!=-1 ){
 	$('body > table:nth-child(4) > tbody > tr:nth-child(2) > td:nth-child(3) > table > tbody > tr:nth-child(2) > td > br:first')
 		.before('<div id="savedMovies"> <h2 style="text-decoration:underline" >Saved for later</h2></div><br/>');
-		
+
 	updateMovies();
 }
-var re = /http(s|):\/\/superchillin\.(com|net)\/\?\d*(&s=\d*|)(&tv=1|)$/
-var OK2 = re.exec(location.href); 
+var re = /http(s|):\/\/superchillin\.(com|net)\/\?\d*(&s=\d*|&tv=1|)*$/
+var OK2 = re.exec(location.href);
 if(OK2 && $('a[href*="hd=1"]')) //On a non-HD page of a move/show
 {
 	chrome.storage.sync.get('AlwaysLoadHD',function(result){
-		
+
 		//console.log(result);
 		if(result.AlwaysLoadHD!==undefined && result.AlwaysLoadHD==true && $('a[href*="hd=1"]').length>0) {
 			chrome.storage.sync.set({'displayAlert': true, function() {}});
-			
+
 			location = $('a[href*="hd=1"]').attr('href');
 		}
+		else{
+			movInfoDisplay();
+		}
 	});
-	movInfoDisplay();
 }
-re = /http(s|):\/\/superchillin\.(com|net)\/\?\d*(&s=\d*|)(&tv=1|)(&s=\d*|)(&hd=1|)/
-OK = re.exec(location.href); 
-if(OK && !OK2) //on the HD page of a movie/show
+re = /http(s|):\/\/superchillin\.(com|net)\/\?\d*(&s=\d*|&tv=1)*(&hd=1)/
+OK = re.exec(location.href);
+if(OK) //on the HD page of a movie/show
 {
 	chrome.storage.sync.get('displayAlert',function(result){
+		movInfoDisplay();
 		if(result.displayAlert==true){
 			$('body').prepend('<div class="alert" onclick="this.style.display=\'none\';" id="notifyAlert"> Switched to HD </div>');
 			//alert('display alert');
-		
+
 			setTimeout(function(){
 				$("#notifyAlert").fadeOut("slow");
 			},5000);
-			
-		
+
 			chrome.storage.sync.set({'displayAlert': false, function() {}});
 		}
 	});
-	movInfoDisplay();
 }
 
 //Adds TV shows to favorited section and removes them from normal position
@@ -202,17 +205,17 @@ function UpdateRows(){
 		var td = $(this).find('td').css("width","5%");
 		td = td.next().css("width","90%");
 		td.next().css("width","5%");
-		
+
 		//put proper ID here
 		var clicker = $('<span class="rightStar">☆</span>');
 		clicker.on('click',favoriter);
 		var toBeAdded = $('<td></td>').append(clicker);
 		$(this).append(toBeAdded);
-		
+
 		// add to favorite list instead of displaying below
 		var idOfMe = $(this).find('a[href*="episodes"]').attr('href').substring(14);
-		
-		
+
+
 		if(StoredFavShows != null && StoredFavShows.length>0 && $.inArray(idOfMe,StoredFavShows)!=-1){
 			$(this).parent().parent().next('hr').remove();
 			var toBeFav = $(this).detach();
@@ -220,27 +223,36 @@ function UpdateRows(){
 			//alert('added');
 		}
 	});
-	
+
 }
 
 //Adds stars to movie rows but not to ones already saved for later
 function UpdateMovRows(){
-	
+
 	//add stars
 	$('.tippable').each(function(){
-		
+
 		var movId = $(this).attr('href').substring(2);
-		
+
 		var star = $('<span class="rightStarMov">☆</span>'); //add star
 		star.on('click',movFavoriter);
 		$(this).after(star).after(' - ');
-		
+
 		if($.inArray(movId,StoredFavMovies)!=-1){ //if inside
 			addToMovieFavorites(star, movId);
 		}
-		
-		
 	});
+
+	//temporary section to load the movie pictures.
+	$(".tippable_enhanced").mousemove(function(e) {
+
+		$('.balloon').html('<a href="/?' + $(this).attr('id') + '"><img src="https://img.superchillin.org/2img/' + $(this).attr('id') + '.jpg" width="214" height"317" alt=""/></a>');
+		$('.balloon').css('left', e.pageX + 25).css('top', e.pageY + 25).css('display', 'block');
+
+	});
+	$(".tippable_enhanced").mouseout(function() {
+            $('.balloon').css('display', 'none');
+        });
 }
 
 //Save an episode
@@ -252,14 +264,14 @@ function userSaveShowProgress(showID, episodeID, checke){
 	if(ShowProgress[showID]===undefined){
 		ShowProgress[showID] = [];
 	}
-	
+
 	if(checke)
 		ShowProgress[showID].push(episodeID);
 	else{
 		if(ShowProgress[showID].indexOf(episodeID)!=-1)
 			ShowProgress[showID].splice(ShowProgress[showID].indexOf(episodeID),1);
 	}
-		
+
 	chrome.storage.sync.set({'showProgress': ShowProgress}, function() {
 		  // Notify that we saved.
 		  console.log("Successfully saved ShowProgress.");
@@ -274,8 +286,8 @@ if(OK){
 	var showID = location.href.split('?')[1];
 	chrome.storage.sync.get('showProgress',function(result){
 		ShowProgress = result.showProgress;
-		
-		
+
+
 		var first = true;
 		var imdex = 0
 		$('b').each(function(){
@@ -296,7 +308,7 @@ if(OK){
 			}
 		});
 	});
-	
+
 }
 
 //Adds Movie Info
@@ -306,7 +318,7 @@ function movInfoDisplay(){
 			var movAPIUrl = APIUrl + $('a[href*="imdb"]').attr('href').split('/')[4];
 			$.get(movAPIUrl,function(result){
 				console.log(result);
-				
+
 				var table = ('<table class="movTable"><tr><td style="width:80px"><span>Plot</span></td><td class="plot"><span class="realPlot">'+
 						result.Plot +'</span><span class="hoverThing">Hover for plot</span></td></tr><tr><td><span>Released</span></td><td><span>'+
 						result.Released +'</span></td></tr><tr><td><span>Rated</span></td><td><span>'+
@@ -316,8 +328,13 @@ function movInfoDisplay(){
 						result.Metascore +'</span></td></tr><tr><td><span>Genre</span></td><td><span>'+
 						//result.LEFTOFF +'</td></tr><tr><td class="leftoff">Left off:</td><td>'+
 						result.Genre +'</span></td></tr></table>');
-						
-				$('body > table:nth-child(4) > tbody > tr:nth-child(2) > td:nth-child(3) > table > tbody > tr:nth-child(3)').before('<tr><td>'+table+'</td></tr>');
+
+				if($('body > table:nth-child(4) > tbody > tr:nth-child(2) > td:nth-child(3) > table > tbody > tr:nth-child(3)').length==1){
+					$('body > table:nth-child(4) > tbody > tr:nth-child(2) > td:nth-child(3) > table > tbody > tr:nth-child(3)').before('<tr><td>'+table+'</td></tr>');
+				}
+				else if($('body > table:nth-child(5) > tbody > tr:nth-child(2) > td:nth-child(3) > table > tbody > tr:nth-child(3)').length==1){
+					$('body > table:nth-child(5) > tbody > tr:nth-child(2) > td:nth-child(3) > table > tbody > tr:nth-child(3)').before('<tr><td>'+table+'</td></tr>');
+				}
 			});
 		}
 	});
@@ -326,11 +343,11 @@ function movInfoDisplay(){
 
 //TODO: if we're watching a show let's set a timer to watch the progress of it and at 90% mark it as watched
 if(location.href.indexOf("tv=")!=-1){
-	
+
 	//mark video as done if $('.jwtimeSliderThumb')[0].style.left > 90%
 	//		or if js-progress exists    js-progress .style.width
-	
+
 }
-	
+
 
 //alert(location);

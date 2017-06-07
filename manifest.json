@@ -3,11 +3,11 @@
 
   "name": "Superchillin Enhancement Suite",
   "description": "This extension helps keep track of Favorites and make life easier",
-  "version": "2.0.3",
+  "version": "2.0.5",
 
   "browser_action":{
 	"default_popup": "popup.html",
-	"default_title": "Settings and Backup"
+	"default_title": "SuperChillin Enhancement Suite settings and backup"
   },
   "permissions": [
     "activeTab",
